@@ -1,6 +1,12 @@
+use std::result;
+
 // Rewrite the factorial function using a `for` loop.
 pub fn factorial(n: u32) -> u32 {
-    todo!()
+    let mut result = 1;
+    for num in 2..=n {
+        result *= num;
+    }
+    result
 }
 
 #[cfg(test)]
