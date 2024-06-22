@@ -13,6 +13,60 @@
 // You don't have to though: it's perfectly okay to write three separate
 // implementations manually. Venture further only if you're curious.
 
+// first implementation with generic trait
+// trait Power<T> {
+//     fn power(self, exp: T) -> Self;
+// }
+
+// impl Power<u16> for u32 {
+//     fn power(self, exp: u16) -> Self {
+//         self.pow(exp as u32)
+//     }
+// }
+
+// impl Power<u32> for u32 {
+//     fn power(self, exp: u32) -> Self {
+//         self.pow(exp)
+//     }
+// }
+
+// impl Power<&u32> for u32 {
+//     fn power(self, exp: &u32) -> Self {
+//         self.pow(*exp)
+//     }
+// }
+
+// new implementation more Rust idiomatic with associated and generic types
+pub trait Power<Exponent = Self> {
+    type Output;
+
+    fn power(&self, exponent: Exponent) -> Self::Output;
+}
+
+impl Power<u16> for u32 {
+    type Output = u32;
+    
+    fn power(&self, exponent: u16) -> Self::Output {
+        self.pow(exponent.into())
+    }
+}
+
+impl Power<u32> for u32 {
+    type Output = u32;
+    
+    fn power(&self, exponent: u32) -> Self::Output {
+        self.pow(exponent)
+    }
+}
+
+impl Power<&u32> for u32 {
+    type Output = u32;
+    
+    fn power(&self, exponent: &u32) -> Self::Output {
+        self.pow(*exponent)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::Power;
