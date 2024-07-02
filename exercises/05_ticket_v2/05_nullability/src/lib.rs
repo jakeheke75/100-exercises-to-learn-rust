@@ -36,7 +36,25 @@ impl Ticket {
         }
     }
     pub fn assigned_to(&self) -> Option<&String> {
-        todo!()
+        // this is my solution proposal with the if let construct
+        // let no_assignment : Option<&String> = None;
+        // if let Status::InProgress { assigned_to } = &self.status  {
+        //     Some(&assigned_to)
+        // } else {
+        //     no_assignment
+        // }
+        // second version of if let construct cleaned up a bit
+        // if let Status::InProgress { assigned_to } = &self.status  {
+        //     Some(&assigned_to)
+        // } else {
+        //     None
+        // }
+        // third version with the match statement which is less verbose and
+        // more understandable
+        match &self.status {
+            Status::InProgress { assigned_to } => Some(&assigned_to),
+            _ => None,
+        }
     }
 }
 
